@@ -18,9 +18,8 @@ import time
 
 from termcolor import colored
 
-import smtplib
-import ssl
-import datetime
+import smtplib, ssl, datetime
+
 
 
 channel = "https://www.youtube.com/@dakang"
