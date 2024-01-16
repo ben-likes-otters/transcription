@@ -4,7 +4,7 @@ def parse(smth):
     return (i for i in smth.strip().split("\n"))
   
 
-password, email = parse(string)
+sender, password, email = parse(string)
 
 import urllib
 def unquote(str):
@@ -85,10 +85,10 @@ if latestvid != url: #do this stuff if the latest video is new
 
     context = ssl.create_default_context()
     with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
-        server.login("toadcorp.com@gmail.com",password)
+        server.login(sender,password)
         print(colored("Sending","cyan"))
         msg = "Subject:  Transcription of "+yt.title+" "+datetime.datetime.now().strftime("%m/%d/%y")+"\n\nTranscript for "+yt.title+"\n\n"+transcript
-        server.sendmail("toadcorp.com@gmail.com",email,msg.encode())
+        server.sendmail(sender,email,msg.encode())
         
         
     with open("latest.txt","w") as f:
