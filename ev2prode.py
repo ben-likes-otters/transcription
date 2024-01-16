@@ -58,17 +58,11 @@ if latestvid != url: #do this stuff if the latest video is new
     yt.streams.get_by_itag(249).download(filename="audio.mp3") #more pytube! #for some reason downloading this matters a lot
     end = time.time()
     print(colored("Time to download: "+str(end-start),"magenta"))
-                
-    """videolengthMS = yt.length * 1000
-    print(colored("Audio length (ms): "+str(videolengthMS)+"\n","blue"))
-        
-    print(colored("Placing into pydub AudioSegment\n","cyan"))
-    song = AudioSegment.from_file("audio.mp3")"""
     
     print(colored("Downloading transcript","cyan"))
     transcript = ""
 
-    transcriptlist = yt.captions['zh'].xml_captions.split(">")
+    transcriptlist = yt.captions['zh'].xml_captions.split(">") #this should probably not be hardcoded - fix at some point
 
     for row in transcriptlist:
         temp = row[row.find(">"):]
