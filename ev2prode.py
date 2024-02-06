@@ -62,17 +62,35 @@ if latestvid != url: #do this stuff if the latest video is new
     print(colored("Downloading transcript","cyan"))
     transcript = ""
 
-    transcriptlist = yt.captions['zh'].xml_captions.split(">") #this should probably not be hardcoded - fix at some point
-
-    for row in transcriptlist:
-        temp = row[row.find(">"):]
-        temp = row[:row.find("<")]
-        temp = temp.replace("\n", " ").strip() + " "
-
-        transcript += temp
-        
-    transcript = transcript.replace("  "," ")
-    print(transcript)
+    try:
+        transcriptlist = yt.captions['zh'].xml_captions.split(">") #this should probably not be hardcoded - fix at some point
+    
+        for row in transcriptlist:
+            temp = row[row.find(">"):]
+            temp = row[:row.find("<")]
+            temp = temp.replace("\n", " ").strip() + " "
+    
+            transcript += temp
+            
+        transcript = transcript.replace("  "," ")
+    except: #download didn't work for whatever reason [likely no transcript]
+        start = 0
+        end = 0
+        for i in range(4):
+            start = time.time()
+            audio_file = open("num"+str(i)+".mp3","rb")
+            print(colored("Transcribing: "+str(i+1),"cyan"))
+            text = openai.Audio.transcribe("whisper-1", audio_file).text
+            transcript += text
+            print(colored("Done with "+str(i+1),"cyan"))
+            end = time.time()
+            print(colored(f"Time to transcribe {str(i+1)}: {str(end-start)}","magenta"))
+            print(colored(f"{(len(text)/(end-start)):.2f} words per second"))
+        print()
+            
+        #print(colored(transcript,"green"))
+            
+    print(colored(transcript,"green"))
     
     print(colored("Logging in","cyan"))
 
