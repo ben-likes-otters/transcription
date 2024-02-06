@@ -4,7 +4,7 @@ def parse(smth):
     return (i for i in smth.strip().split("\n"))
   
 
-sender, password, email = parse(string)
+key, sender, password, email = parse(string)
 
 import urllib
 def unquote(str):
@@ -19,7 +19,9 @@ import time
 from termcolor import colored
 
 import smtplib, ssl, datetime
-
+import OpenAI from openai
+openai = new OpenAI()
+openai.API_KEY = key
 
 
 channel = "https://www.youtube.com/@dakang"
