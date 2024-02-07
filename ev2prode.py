@@ -19,8 +19,7 @@ import time
 from termcolor import colored
 
 import smtplib, ssl, datetime
-import OpenAI from openai
-openai = new OpenAI()
+import openai
 openai.API_KEY = key
 
 
